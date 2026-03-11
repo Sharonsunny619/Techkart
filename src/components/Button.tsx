@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { useThemeStyles } from '../hooks/useThemeStyles';
 
 interface ButtonProps {
   children: ReactNode;
@@ -10,37 +9,19 @@ interface ButtonProps {
 }
 
 export function Button({ children, variant = 'primary', onClick, style, type = 'button' }: ButtonProps) {
-  const { theme } = useThemeStyles();
+  const base = 'py-2 px-6 rounded-lg font-body text-sm font-semibold cursor-pointer transition-all duration-200 border-none inline-flex items-center gap-2';
 
-  const base: CSSProperties = {
-    padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
-    borderRadius: theme.borderRadius,
-    fontFamily: theme.fontFamily,
-    fontSize: '0.9rem',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    border: 'none',
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: theme.spacing.sm,
-  };
-
-  const variantStyles: Record<string, CSSProperties> = {
-    primary: { backgroundColor: theme.primaryColor, color: '#fff' },
-    secondary: {
-      backgroundColor: 'transparent',
-      color: theme.primaryColor,
-      border: `1.5px solid ${theme.primaryColor}`,
-    },
-    ghost: { backgroundColor: 'transparent', color: theme.textMuted },
+  const variants: Record<string, string> = {
+    primary: 'bg-primary text-white',
+    secondary: 'bg-transparent text-primary border border-primary',
+    ghost: 'bg-transparent text-muted',
   };
 
   return (
     <button
       type={type}
-      className={`btn btn--${variant}`}
-      style={{ ...base, ...variantStyles[variant], ...style }}
+      className={`btn btn--${variant} ${base} ${variants[variant]}`}
+      style={style}
       onClick={onClick}
     >
       {children}

@@ -1,5 +1,3 @@
-import { useThemeStyles } from '../hooks/useThemeStyles';
-
 interface BadgeProps {
   text: string;
   variant?: 'default' | 'success' | 'warning' | 'danger';
@@ -12,25 +10,13 @@ const BADGE_COLORS: Record<string, { bg: string; text: string }> = {
 };
 
 export function Badge({ text, variant = 'default' }: BadgeProps) {
-  const { theme } = useThemeStyles();
-
-  
-  const colors = BADGE_COLORS[variant] ?? {
-    bg: `${theme.primaryColor}18`,
-    text: theme.primaryColor,
-  };
+  const isDefault = variant === 'default';
+  const colors = BADGE_COLORS[variant];
 
   return (
     <span
-      style={{
-        display: 'inline-block',
-        padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
-        borderRadius: '999px',
-        fontSize: '0.75rem',
-        fontWeight: 600,
-        backgroundColor: colors.bg,
-        color: colors.text,
-      }}
+      className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${isDefault ? 'bg-primary/10 text-primary' : ''}`}
+      style={!isDefault && colors ? { backgroundColor: colors.bg, color: colors.text } : undefined}
     >
       {text}
     </span>

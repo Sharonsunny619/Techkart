@@ -1,24 +1,19 @@
-import type { CSSProperties, ReactNode } from 'react';
-import { useThemeStyles } from '../hooks/useThemeStyles';
+import type { ReactNode } from 'react';
 
 interface GridProps {
   children: ReactNode;
   columns?: number;
   gap?: string;
-  style?: CSSProperties;
 }
 
-export function Grid({ children, columns = 3, gap, style }: GridProps) {
-  const { theme } = useThemeStyles();
-
+export function Grid({ children, columns = 3, gap = '1.5rem' }: GridProps) {
   return (
     <div
-      className="grid"
+      className="grid-responsive"
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gap: gap || theme.spacing.lg,
-        ...style,
+        gap,
       }}
     >
       {children}

@@ -20,12 +20,12 @@ export const lightTheme: ThemeConfig = {
 };
 
 export const darkTheme: ThemeConfig = {
-  primaryColor: '#3b82f6',
+  primaryColor: '#87ABD3',
   secondaryColor: '#60a5fa',
   accentColor: '#fbbf24',
-  backgroundColor: '#0f172a',
-  surfaceColor: '#1e293b',
-  textColor: '#f1f5f9',
+  backgroundColor: '#1a1919',
+  surfaceColor: '#1a1919',
+  textColor: '#fff',
   textMuted: '#94a3b8',
   borderRadius: '8px',
   fontFamily: "'Inter', system-ui, -apple-system, sans-serif",

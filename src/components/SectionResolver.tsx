@@ -7,8 +7,7 @@ import { ProductGridSection } from './sections/ProductGridSection';
 import { UserCardSection } from './sections/UserCardSection';
 import { ProfileDetailsSection } from './sections/ProfileDetailsSection';
 
-// maps section type strings from config to actual components
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SECTIONS: Record<string, React.ComponentType<any>> = {
   hero: HeroSection,
   featuredProducts: FeaturedProductsSection,

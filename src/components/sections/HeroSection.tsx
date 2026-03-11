@@ -19,18 +19,13 @@ export function HeroSection({ heading, subheading, ctaText, ctaLink }: HeroSecti
 
   return (
     <section
-      style={{
-        textAlign: 'center',
-        padding: `${theme.spacing.xl} ${theme.spacing.lg}`,
-        background: bg,
-        borderRadius: theme.borderRadius,
-        marginBottom: theme.spacing.xl,
-      }}
+      className="text-center px-6 py-12 rounded-lg mb-12"
+      style={{ background: bg }}
     >
-      <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: theme.spacing.md }}>
+      <h1 className="text-4xl font-extrabold mb-4">
          {heading}
       </h1>
-      <p style={{ fontSize: '1.15rem', color: theme.textMuted, maxWidth: 560, margin: `0 auto ${theme.spacing.lg}` }}>
+      <p className="text-lg text-muted max-w-xl mx-auto mb-6">
         {subheading}
       </p>
       {ctaText && (

@@ -1,5 +1,4 @@
 import { useProducts } from '../../hooks/useProducts';
-import { useThemeStyles } from '../../hooks/useThemeStyles';
 import { Card } from '../Card';
 import { Badge } from '../Badge';
 import { Grid } from '../Grid';
@@ -12,11 +11,10 @@ interface FeaturedProductsSectionProps {
 
 export function FeaturedProductsSection({ heading, maxItems = 3 }: FeaturedProductsSectionProps) {
   const { products } = useProducts({ maxItems });
-  const { theme } = useThemeStyles();
 
   return (
-    <section style={{ marginBottom: theme.spacing.xl }}>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: theme.spacing.lg }}>
+    <section className="mb-12">
+      <h2 className="text-2xl font-bold mb-6">
         {heading}
       </h2>
       <Grid columns={3}>
@@ -25,26 +23,20 @@ export function FeaturedProductsSection({ heading, maxItems = 3 }: FeaturedProdu
             <img
               src={product.image}
               alt={product.name}
-              style={{
-                width: '100%',
-                height: 180,
-                objectFit: 'cover',
-                borderRadius: `${theme.borderRadius} ${theme.borderRadius} 0 0`,
-                marginBottom: theme.spacing.md,
-              }}
+              className="w-full h-45 object-cover rounded-t-lg mb-4"
             />
-            <div style={{ padding: `0 ${theme.spacing.md} ${theme.spacing.md}` }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: theme.spacing.sm }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: 0 }}>{product.name}</h3>
+            <div className="px-4 pb-4">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-base font-semibold m-0">{product.name}</h3>
                 <Badge
                   text={product.inStock ? 'In Stock' : 'Out of Stock'}
                   variant={product.inStock ? 'success' : 'danger'}
                 />
               </div>
-              <p style={{ fontSize: '0.85rem', color: theme.textMuted, marginBottom: theme.spacing.sm }}>
+              <p className="text-sm text-muted mb-2">
                 {product.description}
               </p>
-              <span style={{ fontSize: '1.1rem', fontWeight: 700, color: theme.primaryColor }}>
+              <span className="text-lg font-bold text-primary">
                 ${product.price.toFixed(2)}
               </span>
             </div>

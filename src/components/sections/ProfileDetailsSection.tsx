@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import { useUserContext } from '../../context/UserContext';
-import { useThemeStyles } from '../../hooks/useThemeStyles';
 import { Card } from '../Card';
 import { Button } from '../Button';
-import type { CSSProperties } from 'react';
 
 interface ProfileDetailsSectionProps {
   editable?: boolean;
 }
 
+const labelClasses = 'block text-xs font-semibold text-muted mb-1 uppercase tracking-wide';
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="mb-4">
+      <span className={labelClasses}>{label}</span>
+      {children}
+    </div>
+  );
+}
+
 export function ProfileDetailsSection({ editable }: ProfileDetailsSectionProps) {
   const { user, updateUser } = useUserContext();
-  const { theme, themeName } = useThemeStyles();
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ name: user.name, email: user.email, bio: user.bio });
 
@@ -25,45 +33,16 @@ export function ProfileDetailsSection({ editable }: ProfileDetailsSectionProps) 
     setEditing(false);
   }
 
-  const labelStyle: CSSProperties = {
-    display: 'block',
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    color: theme.textMuted,
-    marginBottom: theme.spacing.xs,
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-  };
-
-  const inputStyle: CSSProperties = {
-    width: '100%',
-    padding: `${theme.spacing.sm} ${theme.spacing.md}`,
-    borderRadius: theme.borderRadius,
-    border: `1px solid ${themeName === 'dark' ? '#475569' : '#cbd5e1'}`,
-    backgroundColor: theme.surfaceColor,
-    color: theme.textColor,
-    fontSize: '0.95rem',
-    fontFamily: theme.fontFamily,
-    boxSizing: 'border-box',
-  };
-
   const joined = new Date(user.joinDate).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
   });
 
-  function Field({ label, children }: { label: string; children: React.ReactNode }) {
-    return (
-      <div style={{ marginBottom: theme.spacing.md }}>
-        <span style={labelStyle}>{label}</span>
-        {children}
-      </div>
-    );
-  }
+  const inputClasses = 'w-full py-2 px-4 rounded-lg border border-border bg-surface text-foreground text-[0.95rem] font-body box-border';
 
   return (
-    <Card style={{ padding: theme.spacing.lg }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: theme.spacing.lg }}>
-        <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0 }}>Account Details</h3>
+    <Card className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-bold m-0">Account Details</h3>
         {editable && !editing && (
           <Button variant="secondary" onClick={() => setEditing(true)}>Edit Profile</Button>
         )}
@@ -72,29 +51,29 @@ export function ProfileDetailsSection({ editable }: ProfileDetailsSectionProps) 
       {editing ? (
         <form onSubmit={e => { e.preventDefault(); handleSave(); }}>
           <Field label="Name">
-            <input style={inputStyle} value={form.name} onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))} />
+            <input className={inputClasses} value={form.name} onChange={e => setForm(prev => ({ ...prev, name: e.target.value }))} />
           </Field>
           <Field label="Email">
-            <input style={inputStyle} type="email" value={form.email} onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))} />
+            <input className={inputClasses} type="email" value={form.email} onChange={e => setForm(prev => ({ ...prev, email: e.target.value }))} />
           </Field>
           <Field label="Bio">
             <textarea
-              style={{ ...inputStyle, minHeight: 80, resize: 'vertical' }}
+              className={`${inputClasses} min-h-20 resize-y`}
               value={form.bio}
               onChange={e => setForm(prev => ({ ...prev, bio: e.target.value }))}
             />
           </Field>
-          <div style={{ display: 'flex', gap: theme.spacing.sm }}>
+          <div className="flex gap-2">
             <Button type="submit">Save Changes</Button>
             <Button variant="ghost" onClick={handleCancel}>Cancel</Button>
           </div>
         </form>
       ) : (
         <>
-          <Field label="Name"><div style={{ fontSize: '0.95rem', padding: `${theme.spacing.sm} 0` }}>{user.name}</div></Field>
-          <Field label="Email"><div style={{ fontSize: '0.95rem', padding: `${theme.spacing.sm} 0` }}>{user.email}</div></Field>
-          <Field label="Bio"><div style={{ fontSize: '0.95rem', padding: `${theme.spacing.sm} 0` }}>{user.bio}</div></Field>
-          <Field label="Member Since"><div style={{ fontSize: '0.95rem', padding: `${theme.spacing.sm} 0` }}>{joined}</div></Field>
+          <Field label="Name"><div className="text-[0.95rem] py-2">{user.name}</div></Field>
+          <Field label="Email"><div className="text-[0.95rem] py-2">{user.email}</div></Field>
+          <Field label="Bio"><div className="text-[0.95rem] py-2">{user.bio}</div></Field>
+          <Field label="Member Since"><div className="text-[0.95rem] py-2">{joined}</div></Field>
         </>
       )}
     </Card>

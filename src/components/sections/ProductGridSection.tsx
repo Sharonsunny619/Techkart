@@ -1,10 +1,7 @@
 import { useProducts } from '../../hooks/useProducts';
-import { useThemeStyles } from '../../hooks/useThemeStyles';
 import { Card } from '../Card';
 import { Badge } from '../Badge';
-import { Button } from '../Button';
 import { Grid } from '../Grid';
-import type { CSSProperties } from 'react';
 
 interface ProductGridSectionProps {
   columns?: number;
@@ -19,52 +16,48 @@ function ratingStars(rating: number) {
 
 export function ProductGridSection({ columns = 3, showFilters }: ProductGridSectionProps) {
   const { products, categories, activeCategory, setActiveCategory, searchQuery, setSearchQuery } = useProducts();
-  const { theme, themeName } = useThemeStyles();
-
-  const inputStyle: CSSProperties = {
-    padding: `${theme.spacing.sm} ${theme.spacing.md}`,
-    borderRadius: theme.borderRadius,
-    border: `1px solid ${themeName === 'dark' ? '#475569' : '#cbd5e1'}`,
-    backgroundColor: theme.surfaceColor,
-    color: theme.textColor,
-    fontSize: '0.9rem',
-    fontFamily: theme.fontFamily,
-    width: 260,
-  };
 
   return (
     <section>
       {showFilters && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: theme.spacing.sm, marginBottom: theme.spacing.lg, alignItems: 'center' }}>
+        <div className="flex flex-wrap items-center justify-between mb-6">
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            style={inputStyle}
+            className="py-2 px-4 rounded-lg border border-border bg-surface text-foreground text-sm font-body w-full sm:w-65 mb-4 block"
           />
-          <Button
-            variant={activeCategory === null ? 'primary' : 'ghost'}
-            onClick={() => setActiveCategory(null)}
-          >
-            All
-          </Button>
-          {categories.map(cat => (
-            <Button
-              key={cat}
-              variant={activeCategory === cat ? 'primary' : 'ghost'}
-              onClick={() => setActiveCategory(cat)}
+          <div className="flex gap-6 overflow-x-auto scrollbar-none">
+            <button
+              onClick={() => setActiveCategory(null)}
+              className={`pb-2 text-sm font-semibold cursor-pointer shrink-0 transition-colors duration-200 -mb-px ${
+                activeCategory === null
+                  ? 'text-primary border-primary'
+                  : 'text-muted border-transparent hover:text-foreground'
+              }`}
             >
-              {cat}
-            </Button>
-          ))}
+              All
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`pb-2 text-sm font-semibold cursor-pointer shrink-0 transition-colors duration-200 -mb-px ${
+                  activeCategory === cat
+                    ? 'text-primary border-primary'
+                    : 'text-muted border-transparent hover:text-foreground'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
       {products.length === 0 ? (
-        <p style={{ textAlign: 'center', color: theme.textMuted, padding: theme.spacing.xl }}>
-          No products match your criteria.
-        </p>
+        <p className="text-center text-muted py-12">No products match your criteria.</p>
       ) : (
         <Grid columns={columns}>
           {products.map(product => (
@@ -72,22 +65,13 @@ export function ProductGridSection({ columns = 3, showFilters }: ProductGridSect
               <img
                 src={product.image}
                 alt={product.name}
-                style={{
-                  width: '100%',
-                  height: 200,
-                  objectFit: 'cover',
-                  borderRadius: `${theme.borderRadius} ${theme.borderRadius} 0 0`,
-                }}
+                className="w-full h-50 object-cover rounded-t-lg"
               />
-              <div style={{ padding: theme.spacing.md }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: theme.spacing.sm }}>
-                  {product.name}
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: theme.textMuted, marginBottom: theme.spacing.sm }}>
-                  {product.description}
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '1.15rem', fontWeight: 700, color: theme.primaryColor }}>
+              <div className="p-4">
+                <h3 className="text-base font-semibold mb-2">{product.name}</h3>
+                <p className="text-sm text-muted mb-2">{product.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-bold text-primary">
                     ${product.price.toFixed(2)}
                   </span>
                   <Badge
@@ -95,11 +79,9 @@ export function ProductGridSection({ columns = 3, showFilters }: ProductGridSect
                     variant={product.inStock ? 'success' : 'danger'}
                   />
                 </div>
-                <div style={{ marginTop: theme.spacing.sm, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ color: theme.accentColor, letterSpacing: 1 }}>
-                    {ratingStars(product.rating)}
-                  </span>
-                  <span style={{ fontSize: '0.8rem', color: theme.textMuted }}>{product.category}</span>
+                <div className="mt-2 flex justify-between items-center">
+                  <span className="text-accent tracking-wide">{ratingStars(product.rating)}</span>
+                  <span className="text-xs text-muted">{product.category}</span>
                 </div>
               </div>
             </Card>
