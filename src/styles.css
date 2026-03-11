@@ -1,0 +1,138 @@
+/* Global reset and base styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  line-height: 1.6;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Card hover effect */
+.card {
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card--hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effects */
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn--primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn--secondary:hover {
+  background-color: rgba(37, 99, 235, 0.06) !important;
+}
+
+.btn--ghost:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Theme toggle hover */
+.theme-toggle:hover {
+  border-color: #94a3b8 !important;
+}
+
+/* ── Navbar responsive ── */
+
+.navbar__hamburger {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    grid-template-columns: 1fr auto !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .navbar__links {
+    display: none !important;
+  }
+
+  .navbar__hamburger {
+    display: flex !important;
+  }
+}
+
+/* ── Grid responsive ── */
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Stats bar responsive ── */
+@media (max-width: 640px) {
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── User card responsive ── */
+@media (max-width: 640px) {
+  .user-card__inner {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .user-card__stats {
+    flex-direction: column !important;
+  }
+}
+
+/* ── Filter bar responsive ── */
+@media (max-width: 640px) {
+  input[type="text"][placeholder*="Search"] {
+    width: 100% !important;
+  }
+}
+
+/* ── General responsive spacing ── */
+@media (max-width: 768px) {
+  main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  h1 {
+    font-size: 1.75rem !important;
+  }
+}
